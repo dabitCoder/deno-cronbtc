@@ -1,5 +1,5 @@
 import { everyMinute } from "./deps.ts";
-import { TPromiseReturnType } from "./types.ts";
+import { TPromiseReturnType } from "./utils/types.ts";
 import { errorHandler } from "./errorHandler.helper.ts";
 
 const BTC_PRICE_ENDPOINT = "https://api.coingecko.com/api/v3/coins/bitcoin";
@@ -20,9 +20,9 @@ const run = (): void => {
   everyMinute(async () => {
     const price = await getPrice();
 
-    if (price) {
-      console.log(`The current price of BTC is ${price} USD.`);
-    }
+    return price && price > 0
+      ? console.log(`The current price of BTC is ${price} USD.`)
+      : console.log("Oh my god, BTC price dropped to 0. RUN AND BUY MORE.");
   });
 };
 
