@@ -1,7 +1,9 @@
 import { errorHandler } from "./errorHandler.helper.ts";
 import { TPromiseReturnType } from "../types.ts";
+import { config } from "../deps.ts";
 
-const BTC_PRICE_ENDPOINT = "https://api.coingecko.com/api/v3/coins/bitcoin";
+const { API_ENDPOINT } = config({ safe: true });
+const BTC_PRICE_ENDPOINT: string = API_ENDPOINT;
 
 type TCurrency = {
   current_price: { [key: string]: number };
@@ -14,7 +16,7 @@ type TData = {
 type TRequestData = TData;
 
 export const getBTCPrice = async (
-  currency: string,
+  currency: string
 ): Promise<TPromiseReturnType> => {
   try {
     const fetchData: Response = await fetch(BTC_PRICE_ENDPOINT);
